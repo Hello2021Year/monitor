@@ -13,17 +13,20 @@ def generate_alert_message(service_name,text,level):
     message=dict()
     message["tag"]="text"
     trigger_time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    message["text"]="Staus: {} \n".format(level) + "Service: {} \n".format(service_name) + "Description: {} \n".format(text) + "Trigger_time: {}".format(trigger_time)
+    message["text"]="Status: {} \n".format(status) + "Service: {} \n".format(service_name) + "Description: {} \n".format(text) + "time: {}".format(trigger_time)
     tmp = []
     tmp.append(message)
     content.append(tmp)
+
+    # title
+    title=gen_message_title(level)
 
     data = {
         "msg_type": "post",
         "content": {
             "post": {
                 "zh_cn": {
-                    "title": "服务异常告警通知",
+                    "title": title,
                     "content": content
                 },
             }
@@ -40,6 +43,14 @@ def send_lark_message(url,message):
     response = requests.request("POST", url, headers=headers, data=message)
     return response.text
 
+def gen_message_title(level):
+    if level == "Fatal":
+        return "服务运行异常告警通知"
+    elif level == "Error":
+        return "服务重启异常告警通知"
+    elif level == "Info":
+        return "服务由异常转为正常通知"
+
 
 
 
@@ -48,7 +59,8 @@ if __name__ == "__main__":
    service_name=sys.argv[2]
    text=sys.argv[3]
    level=sys.argv[4]
+   status=sys.argv[5]
 
-   message=generate_alert_message(service_name,text,level)
+   message=generate_alert_message(service_name,text,level,status)
    text=send_lark_message(lark_webhook,message)
    print(text)
