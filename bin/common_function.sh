@@ -1,5 +1,5 @@
-source BSC_Node.conf
-CUR_PATH=/mnt/monitor/bin
+source ../conf/Test_Monitor.conf
+CUR_PATH=$(pwd)
 
 function send_message(){
   message_type=$1
@@ -10,11 +10,11 @@ function send_message(){
 
   # shellcheck disable=SC1073
   if [[ $message_type == "LARK" ]];then
-     $PYTHON $CUR_PATH/send_lark_message.py $LARK_WEBHOOK $message $warning_level $status
+     $PYTHON $CUR_PATH/send_lark_message.py $LARK_WEBHOOK "$SERVICE_NAME" "$message" $warning_level $status
   elif [[ $message_type == "TG" ]];then
-     $PYTHON $CUR_PATH/send_tg_message.py $BOT_TOKEN $CHAT_ID $SERVICE_NAME $message $warning_level $status
+     $PYTHON $CUR_PATH/send_tg_message.py $BOT_TOKEN $CHAT_ID "$SERVICE_NAME" "$message" $warning_level $status
   else
-    $PYTHON $CUR_PATH/send_tg_message.py $BOT_TOKEN $CHAT_ID $SERVICE_NAME $message $warning_level $status
-    $PYTHON $CUR_PATH/send_lark_message.py $LARK_WEBHOOK $message $warning_level $status
+    $PYTHON $CUR_PATH/send_tg_message.py $BOT_TOKEN $CHAT_ID "$SERVICE_NAME" "$message" $warning_level $status
+    $PYTHON $CUR_PATH/send_lark_message.py $LARK_WEBHOOK "$SERVICE_NAME" "$message" $warning_level $status
   fi
 }
