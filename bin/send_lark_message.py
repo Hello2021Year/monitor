@@ -3,7 +3,7 @@ import requests
 import time
 import json
 
-def generate_alert_message(service_name,text,level):
+def generate_alert_message(service_name,text,level,status):
     """
     富文本类型
     :param title 标题，默认没有

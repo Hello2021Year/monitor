@@ -2,7 +2,7 @@ import sys
 import requests
 import time
 
-def generate_alert_message(service_name,text,level):
+def generate_alert_message(service_name,text,level,status):
     title=gen_message_title(leve)
     status="<strong>Status: {}</strong>".format(status)
     service_name="<strong>Service: {}</strong>".format(service_name)
