@@ -39,7 +39,7 @@ def send_lark_message(url,message):
     headers = {
                 'Content-Type': 'application/json'
               }
-
+    print(message)
     response = requests.request("POST", url, headers=headers, data=message)
     return response.text
 
