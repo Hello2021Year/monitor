@@ -52,8 +52,6 @@ def gen_message_title(level):
         return "服务由异常转为正常通知"
 
 
-
-
 if __name__ == "__main__":
    lark_webhook=sys.argv[1]
    service_name=sys.argv[2]
